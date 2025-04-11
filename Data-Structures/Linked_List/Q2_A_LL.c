@@ -28,7 +28,7 @@ typedef struct _linkedlist
 
 // You should not change the prototype of this function
 void alternateMergeLinkedList(LinkedList *ll1, LinkedList *ll2);
-
+void mergedLinkedList(LinkedList *ll1, LinkedList *ll2, int idx);
 void printList(LinkedList *ll);
 void removeAllItems(LinkedList *ll);
 ListNode *findNode(LinkedList *ll, int index);
@@ -104,9 +104,58 @@ int main()
 void alternateMergeLinkedList(LinkedList *ll1, LinkedList *ll2)
 {
     /* add your code here */
+
+	int size = ll1->size >= ll2->size ? ll2->size : ll1->size;
+	int idx = 1;
+	
+	for(int i=0;i<size;i++){
+		/**
+		 * 1. findNode로 찾아낸 value로 새로운 노드 재할당해서 ll1에 넣기
+		*/
+		int item = ll2->head->item;
+		int result = insertNode(ll1,idx,item);
+		if(result == -1){
+			printf("Error on insertNode!!");
+			return;
+		}
+		result = removeNode(ll2,0);
+		if(result==-1){
+			printf("Error on removeNode!!");
+			return;
+		}
+
+		/**
+	 	* 2. ll2에 연결된 노드를 끊고 재할당 없이 바로 ll1에 연결하기
+		*/
+
+		mergedLinkedList(ll1,ll2,idx);
+		idx+=2;
+	}
+
+	
+	
 }
 
 ///////////////////////////////////////////////////////////////////////////////////
+
+void mergedLinkedList(LinkedList *ll1, LinkedList *ll2, int idx){
+	ListNode * target = ll2->head;
+	ll2->head= ll2->head->next;
+	ll2->size--;
+	ListNode *prev = ll1->head;
+	while(idx>1){
+		if(prev->next == NULL){
+			break;
+		}
+		prev = prev->next;
+		idx--;
+	}
+	
+	target->next=prev->next;
+	prev->next = target;
+	ll1->size++;
+	
+}
 
 void printList(LinkedList *ll){
 

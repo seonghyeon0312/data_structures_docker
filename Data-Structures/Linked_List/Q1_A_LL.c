@@ -26,7 +26,7 @@ typedef struct _linkedlist{
 
 //You should not change the prototype of this function
 int insertSortedLL(LinkedList *ll, int item);
-
+int findIndex(LinkedList *ll, int item);
 void printList(LinkedList *ll);
 void removeAllItems(LinkedList *ll);
 ListNode *findNode(LinkedList *ll, int index);
@@ -91,9 +91,43 @@ int main()
 int insertSortedLL(LinkedList *ll, int item)
 {
 	/* add your code here */
+	/**
+	 * 1. 
+	*/
+	if(ll->size == 0){
+		int result = insertNode(ll, 0, item);
+		return result;
+	}else{
+		int idx = findIndex(ll, item);
+		if (idx == -1){
+			return idx;
+		}
+		int result = insertNode(ll, idx, item);
+		if(result == 0){
+			return idx;
+		}else{
+			return -1;
+		}
+		
+	}
+	
 }
 
 ///////////////////////////////////////////////////////////////////////////////////
+
+int findIndex(LinkedList *ll,int item){
+	ListNode *node= ll->head;
+	int size = ll->size;
+	for(int i=0;i<size;i++){
+		if(node->item == item){
+			return -1;
+		}else if(node->item < item){
+			node = node->next;
+		}else{
+			return i;
+		}
+	}
+}
 
 void printList(LinkedList *ll){
 

@@ -40,13 +40,13 @@ int removeNode(LinkedList *ll, int index);
 int main()
 {
 	LinkedList ll;
+	
 	int c, i, j;
 	c = 1;
 	//Initialize the linked list 1 as an empty linked list
 	ll.head = NULL;
 	ll.size = 0;
-
-
+	
 	printf("1: Insert an integer to the linked list:\n");
 	printf("2: Move all odd integers to the back of the linked list:\n");
 	printf("0: Quit:\n");
@@ -87,6 +87,40 @@ int main()
 void moveOddItemsToBack(LinkedList *ll)
 {
 	/* add your code here */
+	LinkedList ll2;
+	ll2.head = NULL;
+	ll2.size = 0;
+
+	ListNode *prev = ll->head;
+	ListNode *tmp;
+	int size = ll->size;
+	int idx =0;
+
+	// 값 재할당하여 tail에 연결하고 기존 노드 삭제
+	while(size > 0){
+		if(prev->item % 2 == 1){
+			insertNode(ll,ll->size,prev->item);
+			prev = prev->next;
+			removeNode(ll,idx);
+		}else{
+			prev = prev->next;
+			idx++;
+		}
+		size--;
+	}
+
+	// 기존 노드의 포인터만 조정하여 재할당 없이 재활용
+	// while(size>0){
+	// 	if(prev->item %2 ==1){
+	// 		insertNode(&ll2, ll2.size,prev->item);
+	// 		ll2.size++;
+	// 		prev=prev->next;
+	// 		removeNode(ll,idx);
+	// 	}else{
+	// 		prev=prev->next;
+	// 		idx++;
+	// 	}
+	// }
 }
 
 ///////////////////////////////////////////////////////////////////////////////////
