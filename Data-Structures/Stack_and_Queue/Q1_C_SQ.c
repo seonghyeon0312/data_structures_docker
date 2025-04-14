@@ -117,11 +117,70 @@ int main()
 void createQueueFromLinkedList(LinkedList *ll, Queue *q)
 {
 	/* add your code here */
+
+	// q->ll = *ll;
+	ListNode *prev, *cur;
+
+	prev=ll->head;
+	cur=ll->head->next;
+
+	ListNode *node = malloc(sizeof(ListNode));
+	node->item= prev->item;
+	node->next=NULL;
+	prev = node;
+
+	LinkedList *tmp = malloc(sizeof(LinkedList));
+	tmp->head=node;
+	tmp->size= 1;
+
+	int size = ll->size;
+	while(size>1){
+		ListNode *new = malloc(sizeof(ListNode));
+		new->item=cur->item;
+		new->next=NULL;
+		prev->next=new;
+		prev=new;
+		cur=cur->next;
+		tmp->size++;
+
+		size--;
+	}
+
+	q->ll=*tmp;
 }
 
 void removeOddValues(Queue *q)
 {
 	/* add your code here */
+	ListNode *node = q->ll.head;
+
+	// 1.index를 찾아서 리스트를 조정하기
+	// int idx = 0;
+	// while(node->next != NULL){
+	// 	if(node->item % 2 == 1){
+	// 		int result = removeNode(&(q->ll),idx);
+	// 		if(result == -1){
+	// 			printf("Error during delete node");
+	// 			return;
+	// 		}
+	// 	}
+	// 	node = node->next;
+	// 	idx++;
+	// }
+
+	// 2. enque, deque 활용
+	int size = q->ll.size;
+	while(size>0){
+		if(node->item % 2 == 0){
+			node = node->next;
+			int item = dequeue(q);
+			enqueue(q,item);
+		}else{
+			node = node->next;
+			dequeue(q);
+		}
+		size--;
+	}
 }
 
 //////////////////////////////////////////////////////////////////////////////////

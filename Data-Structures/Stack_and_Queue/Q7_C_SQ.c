@@ -104,7 +104,30 @@ int main()
 ////////////////////////////////////////////////////////////
 int balanced(char *expression)
 {
-/* add your code here */
+	/* add your code here */
+	Stack *s = malloc(sizeof(Stack));
+	LinkedList *ll = malloc(sizeof(LinkedList));
+	s->ll=*ll;
+	while(*expression != '\n'){
+		char value = *expression;
+		push(s,value);
+		if(ll->size == 2){
+			int first = pop(s);
+			int second = pop(s);
+
+			if(first == "[" && second =="]"){
+				continue;
+			}else if(first=="{" && second == "}"){
+				continue;
+			}else if(first == "(" && second ==")"){
+				continue;
+			}else{
+				return 0;
+			}
+		}
+		expression = expression+1;
+	}
+	return 1;
 }
 
 ////////////////////////////////////////////////////////////
