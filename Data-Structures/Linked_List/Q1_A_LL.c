@@ -33,6 +33,9 @@ ListNode *findNode(LinkedList *ll, int index);
 int insertNode(LinkedList *ll, int index, int value);
 int removeNode(LinkedList *ll, int index);
 
+// custom function
+int insertNodeByItem(LinkedList *ll, int item);
+
 
 //////////////////////////// main() //////////////////////////////////////////////
 
@@ -92,7 +95,7 @@ int insertSortedLL(LinkedList *ll, int item)
 {
 	/* add your code here */
 	/**
-	 * 1. 
+	 * 1. optimazing x
 	*/
 	if(ll->size == 0){
 		int result = insertNode(ll, 0, item);
@@ -108,16 +111,21 @@ int insertSortedLL(LinkedList *ll, int item)
 		}else{
 			return -1;
 		}
-		
 	}
-	
-}
 
-///////////////////////////////////////////////////////////////////////////////////
+	/**
+	 * optimazing o
+	*/
+	int result = insertNodeByItem(ll, item);
+	return result;
+
+}
 
 int findIndex(LinkedList *ll,int item){
 	ListNode *node= ll->head;
+
 	int size = ll->size;
+	
 	for(int i=0;i<size;i++){
 		if(node->item == item){
 			return -1;
@@ -128,6 +136,36 @@ int findIndex(LinkedList *ll,int item){
 		}
 	}
 }
+
+int insertNodeByItem(LinkedList *ll, int item){
+	ListNode *node = ll->head;
+	ListNode *prev = ll->head;
+	int size = ll->size;
+	for(int i=0;i<size;i++){
+		if(node->item == item){
+			return -1;
+		}else if(node->item < item){
+			prev = node;
+			node = node->next;
+		}else{
+			ListNode *new = (ListNode *)malloc(sizeof(ListNode));
+			new->item=item;
+			new->next=node;
+			prev->next=new;
+			return i;
+		}
+	}
+
+	if(node == NULL){
+		ListNode *new = (ListNode *)malloc(sizeof(ListNode));
+		new->item = item;
+		new->next = NULL;
+	}
+}
+
+///////////////////////////////////////////////////////////////////////////////////
+
+
 
 void printList(LinkedList *ll){
 

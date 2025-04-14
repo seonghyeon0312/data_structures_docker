@@ -88,22 +88,34 @@ int main()
 void RecursiveReverse(ListNode **ptrHead)
 {
 	/* add your code here */
-	ListNode *prev = *ptrHead;
-	ListNode *cur = prev->next;
-	ListNode *next = cur->next;
-	prev->next = NULL;
+	// ListNode *prev = *ptrHead;
+	// ListNode *cur = prev->next;
+	// ListNode *next = cur->next;
 	
-	while(next != NULL){
-		cur->next = prev;
-		prev = cur;
-		cur = next;
-		next = next->next;
-		if(next == NULL){
-			cur->next = prev;
-			*ptrHead = cur;
-			break;
-		}
+	if(*ptrHead == NULL||(*ptrHead)->next == NULL ){
+		return;
 	}
+
+	ListNode *curr = *ptrHead; //현재 노드를 저장하는 메모리의 주소를 저장하는 포인터
+	ListNode *next =  curr->next;
+	RecursiveReverse(&next);
+
+	curr->next->next = curr;
+	curr->next = NULL;
+	*ptrHead = next;
+
+	// prev->next = NULL;
+	// while(next != NULL){
+	// 	cur->next = prev;
+	// 	prev = cur;
+	// 	cur = next;
+	// 	next = next->next;
+	// 	if(next == NULL){
+	// 		cur->next = prev;
+	// 		*ptrHead = cur;
+	// 		break;
+	// 	}
+	// }
 }
 
 //////////////////////////////////////////////////////////////////////////////////

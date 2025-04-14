@@ -64,7 +64,7 @@ int main()
 
     while(c != 0)
     {
-        printf("Please input your choice(1/2/0): ");
+        printf("\nPlease input your choice(1/2/0): ");
         if( scanf("%d",&c) > 0)
         {
             switch(c)
@@ -103,6 +103,24 @@ int main()
 int hasGreatGrandchild(BTNode *node)
 {
 	/* add your code here */
+    int height = 0;
+    if(node==NULL){
+        return 0;
+    }
+
+    int leftHeight = hasGreatGrandchild(node->left);
+    leftHeight++;
+    int rightHeight = hasGreatGrandchild(node->right);
+    rightHeight++;
+
+    height = leftHeight<rightHeight ? rightHeight : leftHeight;
+
+    if(height > 3){
+        printf("%d ", node->item);
+    }
+    
+    return height;
+    
 }
 
 //////////////////////////////////////////////////////////////////////////////////

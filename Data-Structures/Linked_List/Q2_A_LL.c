@@ -142,7 +142,9 @@ void mergedLinkedList(LinkedList *ll1, LinkedList *ll2, int idx){
 	ListNode * target = ll2->head;
 	ll2->head= ll2->head->next;
 	ll2->size--;
+
 	ListNode *prev = ll1->head;
+
 	while(idx>1){
 		if(prev->next == NULL){
 			break;
@@ -151,7 +153,7 @@ void mergedLinkedList(LinkedList *ll1, LinkedList *ll2, int idx){
 		idx--;
 	}
 	
-	target->next=prev->next;
+	target->next = prev->next;
 	prev->next = target;
 	ll1->size++;
 	
