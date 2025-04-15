@@ -92,6 +92,30 @@ int main()
 void postOrderIterativeS1(BSTNode *root)
 {
 	 /* add your code here */
+	Stack *stack = malloc(sizeof(Stack));
+	stack->top = NULL;
+	BSTNode *node = root;
+	BSTNode *last = NULL;
+	
+	while(node != NULL || !isEmpty(stack)){ 
+		while(node != NULL){
+			push(stack, node);
+			node = node->left;
+		}
+		 BSTNode *peekNode = peek(stack);  // 스택에서 top 확인
+
+        // 2. 오른쪽 자식이 있고, 그것을 아직 방문하지 않았다면 오른쪽으로 이동
+        if (peekNode->right != NULL && last != peekNode->right) {
+            node = peekNode->right;
+        } else {
+            // 3. 아니면 현재 노드 출력
+            printf("%d ", peekNode->item);
+            last = peekNode;
+            pop(stack);
+        }
+	}
+	free(stack);
+	return;
 }
 
 ///////////////////////////////////////////////////////////////////////////////
