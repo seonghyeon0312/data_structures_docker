@@ -106,28 +106,40 @@ int balanced(char *expression)
 {
 	/* add your code here */
 	Stack *s = malloc(sizeof(Stack));
-	LinkedList *ll = malloc(sizeof(LinkedList));
-	s->ll=*ll;
-	while(*expression != '\n'){
-		char value = *expression;
-		push(s,value);
-		if(ll->size == 2){
-			int first = pop(s);
-			int second = pop(s);
+	s->ll.head=NULL;
+	s->ll.size=0;
 
-			if(first == "[" && second =="]"){
-				continue;
-			}else if(first=="{" && second == "}"){
-				continue;
-			}else if(first == "(" && second ==")"){
-				continue;
+	char *address = expression;
+
+	while(*address != '\0'){
+		char value = *address;
+		if(value == '[' || value == '{' || value == '('){
+			push(s,value);
+		}else{
+			if (isEmptyStack(s)) {
+                free(s);
+                return 1;
+            }
+			int first = peek(s);
+			if(value == ']' && first == '['){
+				pop(s);
+			}else if(value == '}' && first == '{'){
+				pop(s);
+			}else if(value == ')' && first == '('){
+				pop(s);
 			}else{
-				return 0;
+				free(s);
+				return 1;
 			}
 		}
-		expression = expression+1;
+		address++;
 	}
-	return 1;
+	if (!isEmptyStack(s)) {
+        free(s);
+        return 1;
+    }
+	free(s);
+	return 0;
 }
 
 ////////////////////////////////////////////////////////////
